@@ -1,13 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
-const keys = require('./config/keys');
+const passport = require('passport');
 
 const authRoutes = require('./routes/api/userRoutes');
 const profileRoutes = require('./routes/api/profileRoutes');
 const postRoutes = require('./routes/api/postRoutes');
 
+require('./services/passportLocal')(passport);
+
+const keys = require('./config/keys');
 const app = express();
 
 // Middlewares
