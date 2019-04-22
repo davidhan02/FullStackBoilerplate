@@ -1,13 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
+const google = require('./routes/auth/google');
 const authRoutes = require('./routes/api/userRoutes');
 const profileRoutes = require('./routes/api/profileRoutes');
 const postRoutes = require('./routes/api/postRoutes');
 
 require('./services/passportLocal')(passport);
+require('./services/passportGoogle')(passport);
 
 const keys = require('./config/keys');
 const app = express();
@@ -16,6 +19,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Passport config
+app.use(cookieSession({ maxAge: 24 * 60 * 60 * 1000, keys: [keys.secretKey] }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 mongoose
   .connect(keys.mongoURI, { useNewUrlParser: true })
   .then(() => console.log('MongoDB Connected'))
@@ -23,6 +31,7 @@ mongoose
 
 app.get('/', (req, res) => res.send('Hello World'));
 
+app.use('/auth/google', google);
 app.use('/api/users', authRoutes);
 app.use('/api/profiles', profileRoutes);
 app.use('/api/posts', postRoutes);
