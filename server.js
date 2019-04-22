@@ -4,7 +4,7 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
-const google = require('./routes/auth/google');
+const googleRoutes = require('./routes/auth/googleRoutes');
 const authRoutes = require('./routes/api/userRoutes');
 const profileRoutes = require('./routes/api/profileRoutes');
 const postRoutes = require('./routes/api/postRoutes');
@@ -31,7 +31,7 @@ mongoose
 
 app.get('/', (req, res) => res.send('Hello World'));
 
-app.use('/auth/google', google);
+app.use('/auth/google', googleRoutes);
 app.use('/api/users', authRoutes);
 app.use('/api/profiles', profileRoutes);
 app.use('/api/posts', postRoutes);
