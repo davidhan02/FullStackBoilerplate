@@ -35,9 +35,9 @@ router.get('/logout', (req, res) => {
 router.post(
   '/login',
   passport.authenticate('local', {
-    successRedirect: '/',
     failureRedirect: '/login'
-  })
+  }),
+  (req, res) => res.json({ msg: 'sucess' })
 );
 
 // @route   POST api/users/register
