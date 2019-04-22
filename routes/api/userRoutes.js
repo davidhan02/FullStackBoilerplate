@@ -26,7 +26,7 @@ router.get('/current_user', (req, res) => {
 // @access  Public
 router.get('/logout', (req, res) => {
   req.logout();
-  res.json({ session: 'logout' });
+  res.json({ session: 'Logged Out' });
 });
 
 // @route   POST api/users/login
@@ -37,7 +37,7 @@ router.post(
   passport.authenticate('local', {
     failureRedirect: '/login'
   }),
-  (req, res) => res.json({ msg: 'sucess' })
+  (req, res) => res.json({ msg: 'Success' })
 );
 
 // @route   POST api/users/register
