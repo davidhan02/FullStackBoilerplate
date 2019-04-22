@@ -9,6 +9,7 @@ const authRoutes = require('./routes/api/userRoutes');
 const profileRoutes = require('./routes/api/profileRoutes');
 const postRoutes = require('./routes/api/postRoutes');
 
+require('./services/passportSetup')(passport);
 require('./services/passportLocal')(passport);
 require('./services/passportGoogle')(passport);
 
@@ -28,8 +29,6 @@ mongoose
   .connect(keys.mongoURI, { useNewUrlParser: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
-
-app.get('/', (req, res) => res.send('Hello World'));
 
 app.use('/auth/google', googleRoutes);
 app.use('/api/users', authRoutes);
