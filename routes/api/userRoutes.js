@@ -14,9 +14,16 @@ router.get('/test', (req, res) =>
   })
 );
 
-// @route  GET /api/users/logout
-// @desc   Log Out from oauth session
-// @access private
+// @route   GET /api/users/user
+// @desc    Get the user data
+// @access  Public
+router.get('/current_user', (req, res) => {
+  res.send(req.user);
+});
+
+// @route   GET /api/users/logout
+// @desc    Log Out from oauth session
+// @access  Public
 router.get('/logout', (req, res) => {
   req.logout();
   res.json({ session: 'logout' });

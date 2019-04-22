@@ -5,8 +5,8 @@ const User = require('../../models/User');
 
 const router = express.Router();
 
-// @route  GET auth/google
-// @desc   Register user with google Oauth
+// @route  GET auth/google/
+// @desc   Register user with Google Oauth
 // @access Public
 router.get(
   '/',
@@ -16,8 +16,8 @@ router.get(
   })
 );
 
-// @route  GET auth/google
-// @desc   Login user with google Oauth
+// @route  GET auth/google/callback
+// @desc   Login user with Google Oauth
 // @access Private
 router.get('/callback', passport.authenticate('google'), (req, res) => {
   res.redirect('/');
