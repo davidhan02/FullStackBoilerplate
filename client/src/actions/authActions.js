@@ -26,3 +26,12 @@ export const submitLogin = (formValues, history) => async dispatch => {
   });
   history.push('/login');
 };
+
+export const submitRegister = (formValues, history) => async dispatch => {
+  const res = await axios.post('/api/users/register', formValues);
+  dispatch({
+    type: FETCH_USER,
+    payload: res.data
+  });
+  history.push('/login');
+};
