@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import PrivateRoute from './common/PrivateRoute';
 import Header from './layout/Header';
 import Login from './auth/Login';
+const About = () => <h2>About</h2>;
 const Dashboard = () => <h2>Dashboard</h2>;
 const Register = () => <h2>Register</h2>;
 const Landing = () => <h2>Landing</h2>;
@@ -24,6 +25,7 @@ class App extends Component {
           <div className="container">
             <Switch>
               <Route exact path="/" component={Landing} />
+              <Route exact path="/about" component={About} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
