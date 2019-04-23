@@ -20,16 +20,15 @@ class Header extends Component {
           <Link to="/dashboard">Dashboard</Link>
         </li>
         <li>
-          <Link onClick={this.logout}>Logout</Link>
+          <Link to="/" onClick={this.logout}>
+            Logout
+          </Link>
         </li>
       </Fragment>
     );
 
     const guestLinks = (
       <Fragment>
-        <li>
-          <a href="/auth/google">Login with Google</a>
-        </li>
         <li>
           <Link to="/login">Login</Link>
         </li>

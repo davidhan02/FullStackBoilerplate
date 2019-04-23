@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import FormField from '../common/FormField';
+
+const loginFields = [
+  { label: 'Email', name: 'email' },
+  { label: 'Password', name: 'password' }
+];
 
 class Login extends Component {
   componentDidMount() {
@@ -14,6 +22,21 @@ class Login extends Component {
     isAuthenticated && this.props.history.push('/dashboard');
   }
 
+  renderFields() {
+    return loginFields.map(({ label, name }) => {
+      return (
+        <Field
+          key={name}
+          type={name}
+          name={name}
+          label={label}
+          placeholder={label}
+          component={FormField}
+        />
+      );
+    });
+  }
+
   render() {
     return (
       <main>
@@ -21,9 +44,8 @@ class Login extends Component {
         <a href="/auth/google">
           <span>Sign in with Google</span>
         </a>
-        <form method="post" action="/api/users/login">
-          <input name="email" type="email" placeholder="email" />
-          <input name="password" type="password" placeholder="password" />
+        <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+          {this.renderFields()}
           <button type="submit">Login</button>
         </form>
         <span>No Account?</span>
@@ -39,4 +61,8 @@ Login.propTypes = {
 
 const mapStateToProps = ({ auth }) => ({ auth });
 
-export default connect(mapStateToProps)(Login);
+const formWrap = reduxForm({
+  form: 'loginForm'
+})(Login);
+
+export default connect(mapStateToProps)(formWrap);
