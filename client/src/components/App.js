@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchUser } from '../actions/authActions';
 import PropTypes from 'prop-types';
@@ -18,7 +18,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <Fragment>
           <Header />
           <div className="container">
@@ -30,7 +30,7 @@ class App extends Component {
             </Switch>
           </div>
         </Fragment>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
