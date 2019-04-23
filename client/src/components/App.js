@@ -11,6 +11,7 @@ import Register from './auth/Register';
 const About = () => <h2>About</h2>;
 const Dashboard = () => <h2>Dashboard</h2>;
 const Landing = () => <h2>Landing</h2>;
+const NotFound = () => <h2>NotFound</h2>;
 
 class App extends Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <Route component={NotFound} />
             </Switch>
           </div>
         </Fragment>
