@@ -20,7 +20,7 @@ router.get(
 // @desc   Login user with Google Oauth
 // @access Private
 router.get('/callback', passport.authenticate('google'), (req, res) => {
-  res.redirect('/');
+  res.redirect('/dashboard');
 });
 
 module.exports = router;
