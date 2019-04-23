@@ -56,7 +56,7 @@ router.post('/login', (req, res, next) => {
 // @route   POST api/users/register
 // @desc    Register a user
 // @access  Public
-router.post('/register', (req, res, next) => {
+router.post('/register', (req, res) => {
   const { name, email, password } = req.body;
   const errors = {};
 
