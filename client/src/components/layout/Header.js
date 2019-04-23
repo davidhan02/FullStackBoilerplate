@@ -70,7 +70,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ auth }) => ({ auth });

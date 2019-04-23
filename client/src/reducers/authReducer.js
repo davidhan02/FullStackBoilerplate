@@ -2,8 +2,6 @@ import isEmpty from '../utils/is-empty';
 import {
   FETCH_USER,
   LOGOUT_USER,
-  LOADING_DATA,
-  CLEAR_LOADING,
   SET_ERRORS,
   CLEAR_ERRORS
 } from '../actions/types';
@@ -29,18 +27,7 @@ export default (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         user: {},
-        errors: {},
-        loading: false
-      };
-    case LOADING_DATA:
-      return {
-        ...state,
-        loading: true
-      };
-    case CLEAR_LOADING:
-      return {
-        ...state,
-        loading: false
+        errors: {}
       };
     case SET_ERRORS:
       return {
