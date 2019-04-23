@@ -46,7 +46,7 @@ class Register extends Component {
 
     return (
       <main>
-        <h3>Login</h3>
+        <h3>Register</h3>
         <form onSubmit={handleSubmit(this.onSubmit)}>
           {this.renderFields()}
           <button type="submit">Register</button>
