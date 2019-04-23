@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchUser } from '../actions/authActions';
+import PropTypes from 'prop-types';
 
 import PrivateRoute from './common/PrivateRoute';
 import Header from './layout/Header';
@@ -33,6 +34,10 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  fetchUser: PropTypes.func.isRequired
+};
 
 export default connect(
   null,
