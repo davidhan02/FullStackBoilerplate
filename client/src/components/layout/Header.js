@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { logoutUser } from '../../actions/authActions';
 
 class Header extends Component {
@@ -67,6 +68,10 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  auth: PropTypes.object.isRequired
+};
 
 const mapStateToProps = ({ auth }) => ({
   auth
