@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import FormField from '../common/FormField';
+import { submitLogin } from '../../actions/authActions';
 
 const loginFields = [
   { label: 'Email', name: 'email' },
@@ -37,6 +38,10 @@ class Login extends Component {
     });
   }
 
+  onSubmit = formValues => {
+    this.props.submitLogin(formValues, this.props.history);
+  };
+
   render() {
     return (
       <main>
@@ -44,7 +49,7 @@ class Login extends Component {
         <a href="/auth/google">
           <span>Sign in with Google</span>
         </a>
-        <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+        <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
           {this.renderFields()}
           <button type="submit">Login</button>
         </form>
@@ -56,7 +61,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  submitLogin: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ auth }) => ({ auth });
@@ -65,4 +71,7 @@ const formWrap = reduxForm({
   form: 'loginForm'
 })(Login);
 
-export default connect(mapStateToProps)(formWrap);
+export default connect(
+  mapStateToProps,
+  { submitLogin }
+)(formWrap);
