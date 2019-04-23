@@ -1,8 +1,44 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
 
 class Header extends Component {
+  logout = () => {
+    this.props.logoutUser();
+  };
+
   render() {
+    const { isAuthenticated, user, loading } = this.props.auth;
+
+    const authLinks = (
+      <Fragment>
+        <li>Welcome {user.name}</li>
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+        <li>
+          <Link to="/" onClick={this.logout}>
+            Logout
+          </Link>
+        </li>
+      </Fragment>
+    );
+
+    const guestLinks = (
+      <Fragment>
+        <li>
+          <a href="/auth/google">Login with Google</a>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+        <li>
+          <Link to="/register">Register</Link>
+        </li>
+      </Fragment>
+    );
+
     return (
       <nav>
         <div className="nav container">
@@ -14,14 +50,9 @@ class Header extends Component {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/about">About Us</Link>
             </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
+            {isAuthenticated ? authLinks : guestLinks}
           </ul>
         </div>
       </nav>
@@ -29,4 +60,11 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = ({ auth }) => ({
+  auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Header);
