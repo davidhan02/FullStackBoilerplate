@@ -67,8 +67,21 @@ Login.propTypes = {
 
 const mapStateToProps = ({ auth }) => ({ auth });
 
+const validate = formValues => {
+  const errors = {};
+
+  loginFields.forEach(({ name }) => {
+    if (!formValues[name]) {
+      errors[name] = 'You must provide a value.';
+    }
+  });
+
+  return errors;
+};
+
 const formWrap = reduxForm({
-  form: 'loginForm'
+  form: 'loginForm',
+  validate: validate
 })(Login);
 
 export default connect(
