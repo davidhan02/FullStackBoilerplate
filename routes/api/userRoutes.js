@@ -15,7 +15,7 @@ router.get('/test', requireLogin, (req, res) =>
   })
 );
 
-// @route   GET /api/users/user
+// @route   GET /api/users/current_user
 // @desc    Get the user data
 // @access  Public
 router.get('/current_user', (req, res) => {
