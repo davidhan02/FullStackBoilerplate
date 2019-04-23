@@ -43,13 +43,15 @@ class Login extends Component {
   };
 
   render() {
+    const { handleSubmit } = this.props;
+
     return (
       <main>
         <h3>Login</h3>
         <a href="/auth/google">
           <span>Sign in with Google</span>
         </a>
-        <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <form onSubmit={handleSubmit(this.onSubmit)}>
           {this.renderFields()}
           <button type="submit">Login</button>
         </form>
@@ -72,7 +74,7 @@ const validate = formValues => {
 
   loginFields.forEach(({ name }) => {
     if (!formValues[name]) {
-      errors[name] = 'You must provide a value.';
+      errors[name] = `You must provide a ${name}`;
     }
   });
 
@@ -80,8 +82,8 @@ const validate = formValues => {
 };
 
 const formWrap = reduxForm({
-  form: 'loginForm',
-  validate: validate
+  validate,
+  form: 'loginForm'
 })(Login);
 
 export default connect(
