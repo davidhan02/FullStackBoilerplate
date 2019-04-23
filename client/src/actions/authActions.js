@@ -10,9 +10,10 @@ export const fetchUser = () => async dispatch => {
   });
 };
 
-export const logoutUser = () => async dispatch => {
+export const logoutUser = history => async dispatch => {
   await axios.get('/api/users/logout');
   dispatch({
     type: LOGOUT_USER
   });
+  history.push('/');
 };

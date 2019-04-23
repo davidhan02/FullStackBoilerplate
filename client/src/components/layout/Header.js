@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logoutUser } from '../../actions/authActions';
 
 class Header extends Component {
   logout = () => {
-    this.props.logoutUser();
+    const { logoutUser, history } = this.props;
+    logoutUser(history);
   };
 
   render() {
@@ -80,4 +81,4 @@ const mapStateToProps = ({ auth }) => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(Header);
+)(withRouter(Header));
