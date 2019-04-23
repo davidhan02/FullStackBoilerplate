@@ -10,10 +10,14 @@ module.exports = passport => {
       },
       async (email, password, done) => {
         try {
-          const user = await User.findOne({ email: email });
-          !user || !user.validPassword(password)
-            ? done(null, false, { message: 'Invalid username/password' })
-            : done(null, user);
+          const user = await User.findOne({ email });
+          if (!user) {
+            return done(null, false, { msg: 'User not found' });
+          }
+          if (!user.validPassword(password)) {
+            return done(null, false, { msg: 'Incorrect password' });
+          }
+          return done(null, user);
         } catch (err) {
           err => done(err);
         }

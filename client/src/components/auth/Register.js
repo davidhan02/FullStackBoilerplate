@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import FormField from '../common/FormField';
-import { submitRegister } from '../../actions/authActions';
+import { submitRegister, clearErrors } from '../../actions/authActions';
 
 const registerFields = [
   { label: 'Name', name: 'name' },
@@ -14,6 +14,10 @@ const registerFields = [
 ];
 
 class Register extends Component {
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
   renderFields() {
     return registerFields.map(({ label, name }) => {
       return (
@@ -34,7 +38,10 @@ class Register extends Component {
   };
 
   render() {
-    const { handleSubmit } = this.props;
+    const {
+      handleSubmit,
+      auth: { errors }
+    } = this.props;
 
     return (
       <main>
@@ -42,6 +49,7 @@ class Register extends Component {
         <form onSubmit={handleSubmit(this.onSubmit)}>
           {this.renderFields()}
           <button type="submit">Register</button>
+          {errors.register && errors.register}
         </form>
       </main>
     );
@@ -50,7 +58,8 @@ class Register extends Component {
 
 Register.propTypes = {
   auth: PropTypes.object.isRequired,
-  submitRegister: PropTypes.func.isRequired
+  submitRegister: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ auth }) => ({ auth });
@@ -79,5 +88,5 @@ const formWrap = reduxForm({
 
 export default connect(
   mapStateToProps,
-  { submitRegister }
+  { submitRegister, clearErrors }
 )(formWrap);

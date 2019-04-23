@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import FormField from '../common/FormField';
-import { submitLogin } from '../../actions/authActions';
+import { submitLogin, clearErrors } from '../../actions/authActions';
 
 const loginFields = [
   { label: 'Email', name: 'email' },
@@ -21,6 +21,10 @@ class Login extends Component {
   componentDidUpdate(prevProps) {
     const { isAuthenticated } = this.props.auth;
     isAuthenticated && this.props.history.push('/dashboard');
+  }
+
+  componentWillUnmount() {
+    this.props.clearErrors();
   }
 
   renderFields() {
@@ -43,7 +47,10 @@ class Login extends Component {
   };
 
   render() {
-    const { handleSubmit } = this.props;
+    const {
+      handleSubmit,
+      auth: { errors }
+    } = this.props;
 
     return (
       <main>
@@ -55,6 +62,8 @@ class Login extends Component {
           {this.renderFields()}
           <button type="submit">Login</button>
         </form>
+        {errors.login && errors.login}
+        <br />
         <span>No Account?</span>
         <Link to="/register">Register</Link>
       </main>
@@ -64,7 +73,8 @@ class Login extends Component {
 
 Login.propTypes = {
   auth: PropTypes.object.isRequired,
-  submitLogin: PropTypes.func.isRequired
+  submitLogin: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ auth }) => ({ auth });
@@ -88,5 +98,5 @@ const formWrap = reduxForm({
 
 export default connect(
   mapStateToProps,
-  { submitLogin }
+  { submitLogin, clearErrors }
 )(formWrap);

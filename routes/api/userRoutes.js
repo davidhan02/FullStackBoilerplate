@@ -33,23 +33,37 @@ router.get('/logout', (req, res) => {
 // @route   POST api/users/login
 // @desc    Login a user / Returning auth token
 // @access  Public
-router.post(
-  '/login',
-  passport.authenticate('local', {
-    failureRedirect: '/login'
-  }),
-  (req, res) => res.send(req.user)
-);
+router.post('/login', (req, res, next) => {
+  const errors = {};
+
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      errors.login = info.msg;
+      return res.status(400).json(errors);
+    }
+    req.login(user, err => {
+      if (err) {
+        return next(err);
+      }
+      return res.json(user);
+    });
+  })(req, res, next);
+});
 
 // @route   POST api/users/register
 // @desc    Register a user
 // @access  Public
 router.post('/register', (req, res, next) => {
   const { name, email, password } = req.body;
+  const errors = {};
 
   User.findOne({ email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: 'Email already exits' });
+      errors.register = 'Email already exists';
+      return res.status(400).json(errors);
     } else {
       const newUser = new User({
         name,
