@@ -18,9 +18,7 @@ class Header extends Component {
           <Link to="/dashboard">Dashboard</Link>
         </li>
         <li>
-          <Link to="/" onClick={this.logout}>
-            Logout
-          </Link>
+          <Link onClick={this.logout}>Logout</Link>
         </li>
       </Fragment>
     );
@@ -39,6 +37,16 @@ class Header extends Component {
       </Fragment>
     );
 
+    const renderLinks = () => {
+      if (loading) {
+        return ' Loading...';
+      }
+      if (isAuthenticated) {
+        return authLinks;
+      }
+      return guestLinks;
+    };
+
     return (
       <nav>
         <div className="nav container">
@@ -52,7 +60,7 @@ class Header extends Component {
             <li>
               <Link to="/about">About Us</Link>
             </li>
-            {isAuthenticated ? authLinks : guestLinks}
+            {renderLinks()}
           </ul>
         </div>
       </nav>
